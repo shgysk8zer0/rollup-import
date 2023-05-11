@@ -1,8 +1,17 @@
 /* eslint-env node */
 import path from 'node:path';
 import fs from 'node:fs';
+import { parse } from 'yaml';
 
 const PREFIXES = ['/', './', '../', 'http://', 'https://'];
+
+const YAML_EXTS = ['.yaml', '.yml'];
+
+const JSON_EXTS = ['.json'];
+
+const isYAML = path => YAML_EXTS.some(ext => path.toLowerCase().endsWith(ext));
+
+const isJSON = path => JSON_EXTS.some(ext => path.toLowerCase().endsWith(ext));
 
 const EXTERNAL_ERROR = 'Import specifier must NOT be present in the Rollup external config. Please remove specifier from the Rollup external config.';
 
@@ -24,10 +33,17 @@ const validate = ({ imports }, { external } = {}) => Object.entries(imports).map
 
 const getFile = (pathname = '', options = {}) => new Promise((resolve, reject) => {
 	const filepath = path.normalize(pathname);
-	fs.promises.readFile(filepath).then(file => {
+	fs.promises.readFile(filepath, { encoding: 'utf8' }).then(file => {
 		try {
-			const obj = JSON.parse(file);
-			resolve(validate(obj, options));
+			if (isYAML(filepath)) {
+				const obj = parse(file);
+				resolve(validate(obj, options));
+			} else if (isJSON(filepath)) {
+				const obj = JSON.parse(file);
+				resolve(validate(obj, options));
+			} else {
+				throw new Error('Unsupported file type.');
+			}
 		} catch (error) {
 			reject(error);
 		}
