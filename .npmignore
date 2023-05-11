@@ -1,0 +1,15 @@
+node_modules/
+test/
+.github/
+.editorconfig
+.eslintignore
+.eslintrc.json
+.htmlhintrc
+.gitattributes
+.gitignore
+.nvmrc
+importmap.json
+rollup.config.js
+*.tgz
+*.log
+*.out.js

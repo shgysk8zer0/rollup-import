@@ -1,0 +1,49 @@
+{
+  "name": "@shgysk8zer0/rollup-import",
+  "version": "0.0.1",
+  "description": "RollUp plugin for importing modules",
+  "type": "module",
+  "engines": {
+    "node": ">=18.13.0"
+  },
+  "private": false,
+  "main": "index.js",
+  "module": "index.js",
+  "scripts": {
+    "test": "npm run lint:js && npm run build",
+    "preversion": "npm test",
+    "lint:js": "eslint .",
+    "fix:js": "eslint. --fix",
+    "build": "rollup -c",
+    "dev": "rollup -cw",
+    "create:lock": "npm i --package-lock-only",
+    "version:bump": "npm run version:bump:patch",
+    "version:bump:patch": "npm version --no-git-tag-version patch",
+    "version:bump:minor": "npm version --no-git-tag-version minor",
+    "version:bump:major": "npm version --no-git-tag-version major"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shgysk8zer0/rollup-import.git"
+  },
+  "keywords": [
+    "node",
+    "rollup",
+    "import",
+    "module"
+  ],
+  "author": "Chris Zuber <admin@kernvalley.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shgysk8zer0/rollup-import/issues"
+  },
+  "homepage": "https://github.com/shgysk8zer0/rollup-import#readme",
+  "devDependencies": {
+    "eslint": "^8.40.0",
+    "rollup": "^3.2.2",
+    "rollup-plugin-url-resolve": "^0.2.0"
+  },
+  "peerDependencies": {
+    "rollup": "^3.2.2"
+  }
+}
