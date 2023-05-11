@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "RollUp plugin for importing modules",
   "type": "module",
   "engines": {
@@ -45,5 +45,8 @@
   },
   "peerDependencies": {
     "rollup": "^3.2.2"
+  },
+  "dependencies": {
+    "yaml": "^2.2.2"
   }
 }

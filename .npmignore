@@ -9,6 +9,7 @@ test/
 .gitignore
 .nvmrc
 importmap.json
+importmap.yaml
 rollup.config.js
 *.tgz
 *.log
