@@ -27,6 +27,48 @@ A RollUp plugin for importing modules
 - [Contributing](./.github/CONTRIBUTING.md)
 <!-- - [Security Policy](./.github/SECURITY.md) -->
 
+## Installation
 
+```bash
+npm i @shgysk8zer0/rollup-import
+```
+
+## Example
+
+### `rollup.config.js`
+
+```js
+import { rollupImport } from '@shgysk8zer0/rollup-import';
+
+export default {
+  input: 'test/index.js',
+  plugins: [rollupImport(['importmap.json'])],
+  external: ['externals'],
+  output: {
+    file: 'test/index.out.js',
+    format: 'iife'
+  }
+};
+```
+
+### `importmap.json`
+
+```json
+{
+  "imports": {
+    "@scope/package": "https://unpkg.com/@scope/package@1.0.0/foo.js",
+    "@scope/package/": "https://unpkg.com/@scope/package@1.0.0/"
+  }
+}
+```
+
+### `index.js`
+
+```js
+import { foo } from '@scope/package'; // -> https://unpkg.com/@scope/package@1.0.0/foo.js
+import { bar } from '@scope/package/bar.js'; // -> https://unpkg.com/@scope/package@1.0.0/bar.js
+```
+
+## Notes
 This currently only handles importmaps but has goals of also handling `import`
 statements, and maybe `import.meta` handling.
