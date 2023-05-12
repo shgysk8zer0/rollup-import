@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "RollUp plugin for importing modules",
   "type": "module",
   "engines": {

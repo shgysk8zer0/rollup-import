@@ -1,6 +1,8 @@
 {
   "imports": {
-    "polyfills": "https://unpkg.com/@shgysk8zer0/polyfills@0.0.5/all.js",
-    "dom": "https://unpkg.com/@shgysk8zer0/kazoo@0.0.5/dom.js"
+    "@shgysk8zer0/kazoo/": "https://unpkg.com/@shgysk8zer0/kazoo@0.0.5/",
+    "@shgysk8zer0/polyfills": "https://unpkg.com/@shgysk8zer0/polyfills@0.0.5/all.js",
+  "@shgysk8zer0/polyfills/": "https://unpkg.com/@shgysk8zer0/polyfills@0.0.5/",
+  "mod": "./test/localmodule.js"
   }
 }
