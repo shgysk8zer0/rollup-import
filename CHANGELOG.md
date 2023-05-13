@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.0] - 2023-05-13
+
+### Added
+- Add workflow to automate releases on GitHub
+
+### Changed
+- Updated README
+- Update error messages
+- Update description
+- Change required node version to `>=18.0.0` (required for `fetch()`)
+
+### Fixed
+- Full URLs were being marked as external
+
 ## [v0.0.5] - 2023-05-12
 
 ### Added

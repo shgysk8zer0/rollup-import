@@ -1,6 +1,8 @@
 # rolllup-import
-A RollUp plugin for importing modules
+A RollUp plugin for importing modules from URLs, paths, and "bare specifiers" using
+import maps. You'll no longer need to `npm i` everything you need in front-end code.
 
+- - -
 [![CodeQL](https://github.com/shgysk8zer0/rollup-import/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/shgysk8zer0/rollup-import/actions/workflows/codeql-analysis.yml)
 ![Node CI](https://github.com/shgysk8zer0/rollup-import/workflows/Node%20CI/badge.svg)
 ![Lint Code Base](https://github.com/shgysk8zer0/rollup-import/workflows/Lint%20Code%20Base/badge.svg)
@@ -33,6 +35,12 @@ A RollUp plugin for importing modules
 npm i @shgysk8zer0/rollup-import
 ```
 
+## Supports
+- External [impormap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)s
+  - JSON
+  - YAML
+- Importing modules from URL and paths and "bare specifiers"
+
 ## Example
 
 ### `rollup.config.js`
@@ -41,11 +49,10 @@ npm i @shgysk8zer0/rollup-import
 import { rollupImport } from '@shgysk8zer0/rollup-import';
 
 export default {
-  input: 'test/index.js',
+  input: 'src/index.js',
   plugins: [rollupImport(['importmap.json'])],
-  external: ['externals'],
   output: {
-    file: 'test/index.out.js',
+    file: 'dest/index.out.js',
     format: 'iife'
   }
 };
@@ -56,8 +63,11 @@ export default {
 ```json
 {
   "imports": {
-    "@scope/package": "https://unpkg.com/@scope/package@1.0.0/foo.js",
-    "@scope/package/": "https://unpkg.com/@scope/package@1.0.0/"
+    "leaflet": "https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.esm.js",
+    "firebase/": "https://www.gstatic.com/firebasejs/9.16.0/",
+    "@scope/package": "./node_modules/@scope/package/index.js"
+    "@shgysk8zer0/polyfills": "https://unpkg.com/@shgysk8zer0/polyfills@0.0.5/all.min.js",
+    "@shgysk8zer0/polyfills/": "https://unpkg.com/@shgysk8zer0@0.0.5/polyfills/"
   }
 }
 ```
@@ -65,10 +75,39 @@ export default {
 ### `index.js`
 
 ```js
-import { foo } from '@scope/package'; // -> https://unpkg.com/@scope/package@1.0.0/foo.js
-import { bar } from '@scope/package/bar.js'; // -> https://unpkg.com/@scope/package@1.0.0/bar.js
+import '@scope/package';
+import '@shgysk8zer0/polyfills';
+import '@shgysk8zer0/polyfills/legacy/object.js'; // -> "https://unpkg.com/@shgysk8zer0@0.0.5/polyfills/legacy/ojbect.js"
+import { name } from './consts.js';
+
+import {
+  map as LeafletMap,
+  marker as LeafletMarker,
+  icon as LeafletIcon,
+  tileLayer as LeafletTileLayer,
+  point as Point,
+  latLng as LatLng,
+  version,
+} from 'leaflet';
+
+import { initializeApp } from 'firebase/firebase-app.js';
+
+import {
+  getFirestore, collection, getDocs, getDoc, doc, addDoc, setDoc,
+  enableIndexedDbPersistence,
+} from 'firebase/firebase-firestore.js';
+
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+  onAuthStateChanged, updateProfile, sendPasswordResetEmail,
+} from 'firebase/firebase-auth.js';
+
+import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/firebase-storage.js';
 ```
 
-## Notes
-This currently only handles importmaps but has goals of also handling `import`
-statements, and maybe `import.meta` handling.
+## Note
+This plugin works well if importing modules without bundling in the dev environment.
+In order to do this, however, you **must** include a `<script type="importmap">`
+in your HTML - `<script type="importmap" src="...">` will not work.
+
+Eventually, this may also replace `import.meta.url` with the current URL if possible.
