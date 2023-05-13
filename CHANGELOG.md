@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.5] - 2023-05-12
+
+### Added
+- Handle importing of URLs via `fetch()`
+
 ## [v0.0.4] - 2023-05-12
 
 ### Added
