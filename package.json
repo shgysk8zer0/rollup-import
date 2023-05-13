@@ -1,10 +1,10 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "0.0.5",
-  "description": "RollUp plugin for importing modules",
+  "version": "1.0.0",
+  "description": "A RollUp plugin for importing modules from URLs, paths, and bare specifiers using import maps.",
   "type": "module",
   "engines": {
-    "node": ">=18.13.0"
+    "node": ">=18.0.0"
   },
   "private": false,
   "main": "index.js",

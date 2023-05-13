@@ -16,19 +16,18 @@ const isString = str => typeof str === 'string';
 const isURL = str => isString(str) && URL_PREFIXES.some(scheme => str.startsWith(scheme));
 const isPath = str => isString(str) && PATH_PREFIXES.some(scheme => str.startsWith(scheme));
 const isBare = str => ! isPath(str) && ! isURL(str);
+const externalError = specifier => new TypeError(`Import specifier "${specifier}" is present in the Rollup external config, which is not allowed. Please remove it.`);
 
 const cached = new Map();
-
-const EXTERNAL_ERROR = 'Import specifier must NOT be present in the Rollup external config. Please remove specifier from the Rollup external config.';
 
 function buildCache({ imports }, { external } = {}) {
 	return Object.entries(imports).map(([key, value]) => {
 		if (isBare(value)) {
-			throw Error(`Import specifier can NOT be mapped to a bare import statement. Import specifier "${key}" is being wrongly mapped to "${value}"`);
+			throw TypeError(`Resolution of specifier “${key}” was blocked by a null entry. ${value} is a bare specifier and is not allowed.`);
 		} else if (external instanceof Function && external(key)) {
-			throw Error(EXTERNAL_ERROR);
+			throw externalError(key);
 		} else if (Array.isArray(external) && external.includes(key)) {
-			throw Error(EXTERNAL_ERROR);
+			throw externalError(key);
 		} else {
 			return { key, value };
 		}
@@ -132,7 +131,9 @@ export function rollupImport(importMaps = []) {
 		},
 		resolveId(id, src, /*{ assertions, custom, isEntry }*/) {
 			// @TODO: Store `options.external` and use for return value?
-			if (isURL(src) && isPath(id)) {
+			if (isURL(id)) {
+				return { id, external: false };
+			} else if (isURL(src) && isPath(id)) {
 				return { id: new URL(id, src).href, external: false };
 			} else if (isBare(id)) {
 				const match = getMatch(id);
