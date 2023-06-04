@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Update GitHub Release Action with correct permissions
+
 ### Changed
 - Update Action for GitHub Release
 
