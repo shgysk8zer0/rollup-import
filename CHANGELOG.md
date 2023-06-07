@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.1] - 2023-06-06
+
+### Added
+- Add `@shgysk8zer0/npm-utils`
+
+### Changed
+- Use `@shgysk8zer0/npm-utils/importmap` instead of own resolver of specifiers
+
 ### Fixed
 - Update GitHub Release Action with correct permissions
 

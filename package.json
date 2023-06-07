@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A RollUp plugin for importing modules from URLs, paths, and bare specifiers using import maps.",
   "type": "module",
   "engines": {
@@ -46,6 +46,6 @@
     "rollup": "*"
   },
   "dependencies": {
-    "yaml": "^2.2.2"
+    "@shgysk8zer0/npm-utils": "^1.0.4"
   }
 }

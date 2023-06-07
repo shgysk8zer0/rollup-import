@@ -1,4 +1,5 @@
 import '@shgysk8zer0/polyfills';
+import './components.js';
 import { html, ready } from '@shgysk8zer0/kazoo/dom.js';
 
 import {
