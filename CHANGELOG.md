@@ -6,19 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v1.0.1] - 2023-06-06
+## [v1.0.1] - 2023-06-07
 
 ### Added
 - Add `@shgysk8zer0/npm-utils`
+- Add `index.cjs` as module for use with `require()`
 
 ### Changed
 - Use `@shgysk8zer0/npm-utils/importmap` instead of own resolver of specifiers
+- Update Action for GitHub Release
 
 ### Fixed
 - Update GitHub Release Action with correct permissions
-
-### Changed
-- Update Action for GitHub Release
 
 ## [v1.0.0] - 2023-05-13
 
