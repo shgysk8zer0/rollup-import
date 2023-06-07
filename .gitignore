@@ -132,3 +132,5 @@ dist
 # Build artifacts
 *.out.js
 *.min.js
+*.cjs
+*.map.*

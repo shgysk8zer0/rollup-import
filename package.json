@@ -7,15 +7,23 @@
     "node": ">=18.0.0"
   },
   "private": false,
-  "main": "index.js",
+  "main": "index.cjs",
   "module": "index.js",
+  "exports": {
+    ".": {
+      "import": "index.js",
+      "require": "index.cjs"
+    }
+  },
   "scripts": {
-    "test": "npm run lint:js && npm run build",
+    "test": "npm run lint:js && npm run test:plugin",
     "preversion": "npm test",
+    "prepare": "npm run build:js",
     "lint:js": "eslint .",
     "fix:js": "eslint. --fix",
-    "build": "rollup -c",
-    "dev": "rollup -cw",
+    "build": "npm run build:js",
+    "build:js": "rollup -c rollup.config.js",
+    "test:plugin": "rollup -c test.config.js",
     "create:lock": "npm i --package-lock-only",
     "version:bump": "npm run version:bump:patch",
     "version:bump:patch": "npm version --no-git-tag-version patch",
