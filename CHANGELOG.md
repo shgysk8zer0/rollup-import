@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.2] - 2023-06-07
+
+### Fixed
+- Bad path for exports (requires `"./"` relative paths)
+
 ## [v1.0.1] - 2023-06-07
 
 ### Added

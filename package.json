@@ -1,14 +1,14 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A RollUp plugin for importing modules from URLs, paths, and bare specifiers using import maps.",
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
   },
   "private": false,
-  "main": "index.cjs",
-  "module": "index.js",
+  "main": "./index.cjs",
+  "module": "./index.js",
   "exports": {
     ".": {
       "import": "index.js",
