@@ -32,8 +32,11 @@ console.log({
 	enableIndexedDbPersistence, getAuth, createUserWithEmailAndPassword,
 	signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile,
 	sendPasswordResetEmail, getStorage, ref, getDownloadURL, uploadBytes,
+	metaURL: import.meta.url, metaResolve: import.meta.resolve('../index.js'),
 });
 
 ready().then(() => {
 	html('body', '<h1>Hello, World</h1>');
+	console.log(import.meta.url);
+	console.log(import.meta.resolve('index.html'));
 });

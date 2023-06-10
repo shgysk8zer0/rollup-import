@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.4] - 2023-06-10
+
+### Added
+- Add handling of `import.meta.url` and `import.meta.resolve()`
+- Added `magic-string` and `dotenv` as dependencies
+- Add `@shgysk8zer0/js-utils` as dev dependency
+
+### Removed
+- Uninstall `rollup` and `eslint`
+
+### Changed
+- Update README with `import.meta.url` and `import.meta.resolve()` notes & instructions
+
 ## [v1.0.3] - 2023-06-07
 
 ### Fixed

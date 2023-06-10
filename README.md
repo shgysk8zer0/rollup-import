@@ -36,23 +36,51 @@ npm i @shgysk8zer0/rollup-import
 ```
 
 ## Supports
-- External [impormap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)s
+- External [impormap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)
   - JSON
   - YAML
+- Object `{ imports, scope }` for importmap
+- Map `new Map([[specifier, value]])` for importmap
 - Importing modules from URL and paths and "bare specifiers"
+- Resolving `import.meta.url` and `import.meta.resolve('path.ext')`
+
+## Not yet supported
+- `import html from 'template.html' with { type: 'html' }` - No spec yet and will have issues with TrustedTypes
+- `import style from 'styles.css' with { type: 'style' }` - Would require `new CSSStyleSheet().replace()` or `style-src 'unsafe-inline'`
+- `import json from 'data.json' with { type: 'json' }`
+- Parsing from `<script type="importmap">` in an HTML file
+- Use of `scope`
 
 ## Example
 
 ### `rollup.config.js`
 
 ```js
-import { rollupImport } from '@shgysk8zer0/rollup-import';
+import {
+  rollupImport, // Handles `import '@scope/package' resolving and fetching`
+  rollupImportMeta // Handles `import.meta.url` and `import.meta.resolve()`,
+} from '@shgysk8zer0/rollup-import';
+
+import terser from '@rollup/plugin-terser';
+
+// To load environment variables from `.env`
+import { config } from 'dotenv';
+config();
 
 export default {
-  input: 'src/index.js',
-  plugins: [rollupImport(['importmap.json'])],
+  input: 'src/index.mjs',
+  plugins: [
+    rollupImport(['path/to/importmap.json']),
+    rollupImportMeta({
+      // MUST be a valid URL
+      baseURL: 'https://example.com', // Defaults to `process.env.URL` if set
+      // MUST be a `file:` URL
+      projectRoot: 'file:///home/user/Projects/my-project/', // Dfaults to `file:///${process.cwd()}/`
+    }),
+    terser(),
+  ],
   output: {
-    file: 'dest/index.out.js',
+    file: 'dest/index.js',
     format: 'iife'
   }
 };
@@ -65,7 +93,7 @@ export default {
   "imports": {
     "leaflet": "https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.esm.js",
     "firebase/": "https://www.gstatic.com/firebasejs/9.16.0/",
-    "@scope/package": "./node_modules/@scope/package/index.js"
+    "@scope/package": "./node_modules/@scope/package/index.js",
     "@shgysk8zer0/polyfills": "https://unpkg.com/@shgysk8zer0/polyfills@0.0.5/all.min.js",
     "@shgysk8zer0/polyfills/": "https://unpkg.com/@shgysk8zer0@0.0.5/polyfills/"
   }
@@ -78,36 +106,23 @@ export default {
 import '@scope/package';
 import '@shgysk8zer0/polyfills';
 import '@shgysk8zer0/polyfills/legacy/object.js'; // -> "https://unpkg.com/@shgysk8zer0@0.0.5/polyfills/legacy/ojbect.js"
+import { initializeApp } from 'firebase/firebase-app.js';
 import { name } from './consts.js';
 
-import {
-  map as LeafletMap,
-  marker as LeafletMarker,
-  icon as LeafletIcon,
-  tileLayer as LeafletTileLayer,
-  point as Point,
-  latLng as LatLng,
-  version,
-} from 'leaflet';
+const stylesheet = document.createElement('link');
+stylesheet.rel = 'stylesheet';
+stylesheet.href = import.meta.resolve('styles.css');
 
-import { initializeApp } from 'firebase/firebase-app.js';
-
-import {
-  getFirestore, collection, getDocs, getDoc, doc, addDoc, setDoc,
-  enableIndexedDbPersistence,
-} from 'firebase/firebase-firestore.js';
-
-import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
-  onAuthStateChanged, updateProfile, sendPasswordResetEmail,
-} from 'firebase/firebase-auth.js';
-
-import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/firebase-storage.js';
+document.head.append(stylesheet);
 ```
 
-## Note
+## Notes
+
+Using `import`s only, you may use only `rollupImport` or `rollupImportMeta`
+via `@shgysk8zer0/rollup-import/import` and `@shgysk8zer0/rollup-import/meta`
+respectively. To use with `require()`, you MUST import either/both using
+`const {rollupImport, rollupImportMeta } = require('@shgysk8zer0/rollup-import')`.
+
 This plugin works well if importing modules without bundling in the dev environment.
 In order to do this, however, you **must** include a `<script type="importmap">`
 in your HTML - `<script type="importmap" src="...">` will not work.
-
-Eventually, this may also replace `import.meta.url` with the current URL if possible.
