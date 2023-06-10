@@ -133,4 +133,5 @@ dist
 *.out.js
 *.min.js
 *.cjs
-*.map.*
+*.map
+*bak

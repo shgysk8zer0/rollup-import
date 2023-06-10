@@ -1,17 +1,17 @@
-import { rollupImport } from './index.js';
+import { rollupImport } from './import.js';
+import { rollupImportMeta } from './meta.js';
+// import { config } from 'dotenv';
+import { getConfig } from '@shgysk8zer0/js-utils/rollup';
+// config();
 
-export default {
-	input: 'test/index.js',
-	onwarn: warning => {
-		if (warning.code === 'MISSING_GLOBAL_NAME' || warning.code === 'UNRESOLVED_IMPORT') {
-			throw new Error(warning.message);
-		} else if (warning.code !== 'CIRCULAR_DEPENDENCY') {
-			console.warn(`(!) ${warning.message}`);
-		}
-	},
-	plugins: [rollupImport(['importmap.json'])],
-	output: {
-		file: 'test/index.out.js',
-		format: 'iife'
-	}
-};
+export default getConfig('./test/index.js', {
+	format: 'cjs',
+	plugins: [
+		rollupImport(['importmap.json']),
+		rollupImportMeta({
+			baseURL: 'https://example.com/',
+		}),
+	],
+	minify: false,
+	sourcemap: true,
+});
