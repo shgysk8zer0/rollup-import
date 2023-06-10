@@ -1,14 +1,16 @@
 import { rollupImport } from './import.js';
 import { rollupImportMeta } from './meta.js';
-import { config } from 'dotenv';
+// import { config } from 'dotenv';
 import { getConfig } from '@shgysk8zer0/js-utils/rollup';
-config();
+// config();
 
 export default getConfig('./test/index.js', {
 	format: 'cjs',
 	plugins: [
 		rollupImport(['importmap.json']),
-		rollupImportMeta(),
+		rollupImportMeta({
+			baseURL: 'https://example.com/',
+		}),
 	],
 	minify: false,
 	sourcemap: true,
