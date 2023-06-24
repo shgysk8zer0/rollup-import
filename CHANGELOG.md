@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.1.2] - 2023-06-23
+
+### Added
+- Add `funding`
+
 ## [v1.1.1] - 2023-06-10
 
 ### Changed
