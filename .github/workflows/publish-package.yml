@@ -1,7 +1,9 @@
 name: Create and publish a packages to npm
 on:
-  release:
-    types: [created]
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 jobs:
   npm-publish:
     name: Publish to npm
@@ -31,3 +33,4 @@ jobs:
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_AUTH }}
+
