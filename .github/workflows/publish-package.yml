@@ -1,6 +1,6 @@
 name: Create and publish a packages to npm
 on:
-  releases:
+  release:
     types: [created]
 jobs:
   npm-publish:
