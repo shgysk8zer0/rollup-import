@@ -42,4 +42,4 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Publish to npm
         if: env.NODE_AUTH_TOKEN != ''
-        run: npm publish --access=public
+        run: npm publish --provenance
