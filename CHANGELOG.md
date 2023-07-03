@@ -6,9 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v1.1.3] - 2023-07-03
+## [v1.2.0] - 2023-07-03
 
 ### Changed
+- Update to node 20.3.1
+- Add `--provenance` to publish GH Action
 - Update testing and publishing workflows
 - Update versioning and lock scripts
 
