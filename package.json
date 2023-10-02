@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A RollUp plugin for importing modules from URLs, paths, and bare specifiers using import maps.",
   "type": "module",
   "engines": {
@@ -14,6 +14,9 @@
       "import": "./index.js",
       "require": "./index.cjs"
     },
+    "./*.js": {
+      "import": "./*.js"
+    },
     "./*": {
       "import": "./*.js"
     }
@@ -23,7 +26,7 @@
     "preversion": "npm test",
     "prepare": "npm run build:js",
     "lint:js": "eslint .",
-    "fix:js": "eslint. --fix",
+    "fix:js": "eslint . --fix",
     "build": "npm run build:js",
     "build:js": "rollup -c rollup.config.js",
     "test:plugin": "rollup -c test.config.js",
@@ -60,10 +63,12 @@
   },
   "homepage": "https://github.com/shgysk8zer0/rollup-import#readme",
   "dependencies": {
+    "@shgysk8zer0/consts": "^1.0.7",
     "@shgysk8zer0/npm-utils": "^1.0.5",
     "magic-string": "^0.30.0"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.1",
     "@shgysk8zer0/js-utils": "^1.0.0",
     "dotenv": "^16.1.4"
   },

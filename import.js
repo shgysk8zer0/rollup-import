@@ -4,8 +4,10 @@ import { readYAMLFile, isYAMLFile } from '@shgysk8zer0/npm-utils/yaml';
 import { readJSONFile, isJSONFile } from '@shgysk8zer0/npm-utils/json';
 import { buildImportmap, getInvalidMapError, resolveImport } from '@shgysk8zer0/npm-utils/importmap';
 import { isString, isBare } from '@shgysk8zer0/npm-utils/utils';
-import { JS as JS_MIMES } from '@shgysk8zer0/npm-utils/mimes';
+import { JS as JS_MIME } from '@shgysk8zer0/consts/mimes';
 import { pathToURL } from '@shgysk8zer0/npm-utils/url';
+
+const JS_MIMES = ['text/javascript', JS_MIME];
 
 const isJS = type => JS_MIMES.includes(type.toLowerCase());
 
