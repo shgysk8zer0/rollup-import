@@ -11,6 +11,7 @@ test/
 .nvmrc
 importmap.json
 importmap.yaml
+importmap.yml
 rollup.config.js
 test.config.js
 *.tgz
@@ -18,3 +19,4 @@ test.config.js
 *.bak
 *.min.js
 *.map
+
