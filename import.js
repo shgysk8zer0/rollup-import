@@ -2,10 +2,12 @@
 import { fileExists, readFile } from '@shgysk8zer0/npm-utils/fs';
 import { readYAMLFile, isYAMLFile } from '@shgysk8zer0/npm-utils/yaml';
 import { readJSONFile, isJSONFile } from '@shgysk8zer0/npm-utils/json';
+import { ROOT } from '@shgysk8zer0/npm-utils/consts';
 import { buildImportmap, getInvalidMapError, resolveImport } from '@shgysk8zer0/npm-utils/importmap';
 import { isString, isBare } from '@shgysk8zer0/npm-utils/utils';
 import { JS as JS_MIME } from '@shgysk8zer0/consts/mimes';
 import { pathToURL } from '@shgysk8zer0/npm-utils/url';
+import { dirname } from '@shgysk8zer0/npm-utils/path';
 
 const JS_MIMES = ['text/javascript', JS_MIME];
 
@@ -33,11 +35,11 @@ export function rollupImport(importMaps = []) {
 		name: '@shgysk8zer0/rollup-import',
 		async load(path) {
 			if (cached.has(path)) {
-				return cached.get(path);
+				return new URL(cached.get(path));
 			} else {
 				switch(new URL(path).protocol) {
 					case 'file:':
-						return readFile(path.replace('file://', '')).then(content => {
+						return readFile(path).then(content => {
 							cached.set(path, content);
 							return content;
 						});
@@ -79,13 +81,17 @@ export function rollupImport(importMaps = []) {
 		resolveId(id, src, { /*assertions, custom,*/ isEntry }) {
 			// @TODO: Store `options.external` and use for return value?
 			if (isEntry) {
-				return { id: new URL(id, `file://${process.cwd()}/`).href, external: false };
+				return { id: new URL(id, ROOT.href).href, external: false };
 			} else if (isBare(id)) {
-				const match = resolveImport(id, importmap, { base: src });
+				const match = resolveImport(id, importmap);
 
-				return match instanceof URL ? { id: match.href, external: false } : null;
+				if (match instanceof URL) {
+					return { id: match.href, external: false };
+				} else {
+					return null;
+				}
 			} else {
-				return { id: pathToURL(id, src).href, external: false };
+				return { id: pathToURL(id, dirname(src)).href, external: false };
 			}
 		},
 	};

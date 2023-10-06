@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.2.2] - 2023-10-05
+
+### Changed
+- Handle file paths as `file:` URLs to avoid inconsistency
+
+### Fixed
+- Fixed handling Windows file paths [shgysk8zer0/npm-utils#19](https://github.com/shgysk8zer0/npm-utils/pull/19)
+
 ## [v1.2.1] - 2023-10-02
 
 ### Changed
