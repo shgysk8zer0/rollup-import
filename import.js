@@ -35,7 +35,7 @@ export function rollupImport(importMaps = []) {
 		name: '@shgysk8zer0/rollup-import',
 		async load(path) {
 			if (cached.has(path)) {
-				return new URL(cached.get(path));
+				return cached.get(path);
 			} else {
 				switch(new URL(path).protocol) {
 					case 'file:':
