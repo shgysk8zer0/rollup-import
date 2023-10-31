@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.2.3] - 2023-10-31
+
+### Fixed
+- Caching in `load()` is for content, not URLs... Don't convert to `URL`s
+
 ## [v1.2.2] - 2023-10-05
 
 ### Changed
