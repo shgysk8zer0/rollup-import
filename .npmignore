@@ -12,8 +12,8 @@ test/
 importmap.json
 importmap.yaml
 importmap.yml
-rollup.config.js
-test.config.js
+*.config.js
+*.test.js
 *.tgz
 *.log
 *.bak
