@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.2.6] - 2025-03-31
+
+### Added
+- Add ability to retry fetching scripts
+
 ## [v1.2.5] - 2024-10-04
 
 ### Fixed

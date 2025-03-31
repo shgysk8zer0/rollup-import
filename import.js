@@ -30,6 +30,38 @@ async function getFile(pathname) {
 export function rollupImport(importMaps = []) {
 	const importmap = new Map();
 	const maps = Array.isArray(importMaps) ? importMaps : [importMaps];
+	const MAX_ATTEMPTS = 3;
+
+	const getJS = async (path, {
+		attempts = MAX_ATTEMPTS,
+		referrerPolicy = 'no-referrer',
+		cache = 'no-store',
+		signal,
+	} = {}) => {
+		try {
+			const resp = await fetch(path, {
+				headers: { Accept: 'application/javascript' },
+				referrerPolicy,
+				cache,
+				signal,
+			}).catch(() => Response.error());
+
+			if (! resp.ok) {
+				throw new Error(`<${path}> [${resp.status} ${resp.statusText}]`);
+			} else if (! isJS(resp.headers.get('Content-Type').split(';')[0].trim())) {
+				throw new TypeError(`Expected 'application/javascript' but got ${resp.headers.get('Content-Type')}`);
+			} else {
+				return await resp.text();
+			}
+		} catch(err) {
+			if (attempts > 0) {
+				console.warn(err);
+				return await getJS(path, { attempts: --attempts, referrerPolicy, cache, signal });
+			} else {
+				throw err;
+			}
+		}
+	};
 
 	return {
 		name: '@shgysk8zer0/rollup-import',
@@ -46,16 +78,9 @@ export function rollupImport(importMaps = []) {
 
 					case 'https:':
 					case 'http:':
-						return fetch(path).then(async resp => {
-							if (! resp.ok) {
-								throw new Error(`<${path}> [${resp.status} ${resp.statusText}]`);
-							} else if (! isJS(resp.headers.get('Content-Type').split(';')[0].trim())) {
-								throw new TypeError(`Expected 'application/javascript' but got ${resp.headers.get('Content-Type')}`);
-							} else {
-								const content = await resp.text();
-								cached.set(path, content);
-								return content;
-							}
+						return getJS(path, { attempts: MAX_ATTEMPTS }).then(content => {
+							cached.set(path, content);
+							return content;
 						});
 
 					default:
