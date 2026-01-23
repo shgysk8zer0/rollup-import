@@ -2,6 +2,7 @@ import '@shgysk8zer0/polyfills';
 import bytes from 'https://cdn.kernvalley.us/img/octicons/bell.svg' with { type: 'bytes' };
 import data from './data.json' with { type: 'json' };
 import sheet from './style.css' with { type: 'css' };
+import lorem from './lorem-ipsum.txt' with { type: 'text' };
 import { html, ready } from '@shgysk8zer0/kazoo/dom.js';
 import './components.js';
 
@@ -42,10 +43,11 @@ document.adoptedStyleSheets = [sheet];
 ready().then(() => {
 	html('body', `<h1>Hello, ${data.name}</h1>`);
 	const img = document.createElement('img');
+	const pre = document.createElement('pre');
 	const blob = new Blob([bytes], { type: 'image/svg+xml' });
-	console.log(blob);
 	img.src = URL.createObjectURL(blob);
-	document.body.append(img);
+	pre.textContent = lorem;
+	document.body.append(img, pre);
 	blob.text().then(console.log);
 	img.decode().then(() => URL.revokeObjectURL(img.src));
 	console.log(import.meta.url);

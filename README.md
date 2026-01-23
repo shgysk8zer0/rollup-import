@@ -47,6 +47,7 @@ npm i @shgysk8zer0/rollup-import
   - `'css'`
   - `'json'`
   - `'bytes'`
+  = `'text'`
 
 ## Not yet supported
 - `import html from 'template.html' with { type: 'html' }` - No spec yet and will have issues with TrustedTypes
@@ -110,9 +111,11 @@ import { initializeApp } from 'firebase/firebase-app.js';
 import data from '@scope/package/data.json' with { type: 'json' }; // Results of `JSON.parser()`
 import sheet from '@scope/lib/style.css' with { type: 'css' }; // A `CSSStyleSheet`
 import bytes from '@scope/lib/icon.png' with { type: 'bytes' }; // A `Uint8Array`
+import lorem from '@scope/lib/lorem-ipsum.txt' with { type: 'text' } // A string
 import { name } from './consts.js';
 
 const stylesheet = document.createElement('link');
+const pre = document.createElement('pre');
 stylesheet.rel = 'stylesheet';
 stylesheet.href = import.meta.resolve('styles.css');
 
@@ -122,9 +125,9 @@ document.title = data.title;
 
 const img = document.createElement('img');
 img.src = URL.createObjectURL(new Blob([bytes], { type: 'image/png' }));
-document.body.append(img);
+pre.textContent = lorem;
+document.body.append(img, pre);
 img.decode().then(() => URL.revokeObjectURL(img.src));
-
 ```
 
 ## Notes

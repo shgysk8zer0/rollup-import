@@ -23,6 +23,7 @@ const TYPES = new Map([
 	['json', 'application/json'],
 	['css', 'text/css'],
 	['bytes', '*/*'],
+	['text', 'text/plain'],
 ]);
 
 const cached = new Map();
@@ -58,6 +59,9 @@ function createExport(src, type) {
 				} else {
 					throw new TypeError('For byte exports, src must be a string or UInt8Array.');
 				}
+
+			case 'text':
+				return `export default '${escapeStr(src)}';`;
 
 			default:
 				throw new TypeError(`Unsupported type: ${type}.`);
