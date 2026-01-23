@@ -1,0 +1,8 @@
+:root {
+	--foo: blue;
+	background-color: var(--foo);
+}
+
+body {
+	background: inherit;
+}
