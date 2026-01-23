@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A RollUp plugin for importing modules from URLs, paths, and bare specifiers using import maps.",
   "type": "module",
   "engines": {
