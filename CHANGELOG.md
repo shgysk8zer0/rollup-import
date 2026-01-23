@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.0] - 2026-01-23
+
+### Added
+- Add support for `import foo from 'module' with { type }` with `json`, `css`, and `bytes`
+
 ## [v1.2.6] - 2025-03-31
 
 ### Added
