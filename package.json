@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/rollup-import",
-  "version": "1.2.6",
+  "version": "2.0.0",
   "description": "A RollUp plugin for importing modules from URLs, paths, and bare specifiers using import maps.",
   "type": "module",
   "engines": {
@@ -69,9 +69,10 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.0",
-    "@shgysk8zer0/eslint-config": "^1.0.1",
+    "@shgysk8zer0/eslint-config": "^1.0.4",
     "@shgysk8zer0/js-utils": "^1.0.0",
-    "dotenv": "^17.0.1"
+    "dotenv": "^17.0.1",
+    "eslint": "^9.39.2"
   },
   "peerDependencies": {
     "rollup": ">=3.24.0"

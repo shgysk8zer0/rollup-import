@@ -36,20 +36,22 @@ npm i @shgysk8zer0/rollup-import
 ```
 
 ## Supports
-- External [impormap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)
+- External [importmap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)
   - JSON
   - YAML
 - Object `{ imports, scope }` for importmap
 - Map `new Map([[specifier, value]])` for importmap
 - Importing modules from URL and paths and "bare specifiers"
 - Resolving `import.meta.url` and `import.meta.resolve('path.ext')`
+- [Import Attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with) (`import mod from 'specifier' with { type }`)
+  - `'css'`
+  - `'json'`
+  - `'bytes'`
 
 ## Not yet supported
 - `import html from 'template.html' with { type: 'html' }` - No spec yet and will have issues with TrustedTypes
-- `import style from 'styles.css' with { type: 'style' }` - Would require `new CSSStyleSheet().replace()` or `style-src 'unsafe-inline'`
-- `import json from 'data.json' with { type: 'json' }`
 - Parsing from `<script type="importmap">` in an HTML file
-- Use of `scope`
+- Use of `scopes`
 
 ## Example
 
@@ -104,9 +106,10 @@ export default {
 
 ```js
 import '@scope/package';
-import '@shgysk8zer0/polyfills';
-import '@shgysk8zer0/polyfills/legacy/object.js'; // -> "https://unpkg.com/@shgysk8zer0@0.0.5/polyfills/legacy/ojbect.js"
 import { initializeApp } from 'firebase/firebase-app.js';
+import data from '@scope/package/data.json' with { type: 'json' }; // Results of `JSON.parser()`
+import sheet from '@scope/lib/style.css' with { type: 'css' }; // A `CSSStyleSheet`
+import bytes from '@scope/lib/icon.png' with { type: 'bytes' }; // A `Uint8Array`
 import { name } from './consts.js';
 
 const stylesheet = document.createElement('link');
@@ -114,6 +117,14 @@ stylesheet.rel = 'stylesheet';
 stylesheet.href = import.meta.resolve('styles.css');
 
 document.head.append(stylesheet);
+document.adoptedStyleSheets = [sheet];
+document.title = data.title;
+
+const img = document.createElement('img');
+img.src = URL.createObjectURL(new Blob([bytes], { type: 'image/png' }));
+document.body.append(img);
+img.decode().then(() => URL.revokeObjectURL(img.src));
+
 ```
 
 ## Notes
