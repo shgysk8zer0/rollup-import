@@ -113,7 +113,9 @@ export function rollupImport(importMaps = []) {
 			if (cached.has(path)) {
 				return cached.get(path);
 			} else {
-				const { assertions: { type } = {} } = this.getModuleInfo(path);
+				const { assertions = {}, attributes = {} } = this.getModuleInfo(path);
+				const type = assertions?.type ?? attributes?.type;
+
 				switch(URL.parse(path)?.protocol) {
 					case 'file:':
 						return await (type === 'bytes'
@@ -151,20 +153,21 @@ export function rollupImport(importMaps = []) {
 				}
 			}
 		},
-		resolveId(id, src, { /*assertions, custom,*/ isEntry }) {
+		resolveId(id, src, { assertions, attributes, custom, isEntry }) {
 			// @TODO: Store `options.external` and use for return value?
+			const attrs = attributes ?? assertions ?? {};
 			if (isEntry) {
-				return { id: new URL(id, ROOT.href).href, external: false };
+				return { id: new URL(id, ROOT.href).href, external: false, attributes: attrs, assertions: attrs, custom: custom ?? {} };
 			} else if (isBare(id)) {
 				const match = resolveImport(id, importmap);
 
 				if (match instanceof URL) {
-					return { id: match.href, external: false };
+					return { id: match.href, external: false, attributes: attrs, assertions: attrs, custom: custom ?? {} };
 				} else {
 					return null;
 				}
 			} else {
-				return { id: pathToURL(id, dirname(src)).href, external: false };
+				return { id: pathToURL(id, dirname(src)).href, external: false, attributes: attrs, assertions: attrs, custom: custom ?? {} };
 			}
 		},
 	};
