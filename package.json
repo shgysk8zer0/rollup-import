@@ -71,7 +71,8 @@
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@shgysk8zer0/eslint-config": "^1.0.4",
     "@shgysk8zer0/js-utils": "^1.0.0",
-    "dotenv": "^17.0.1"
+    "dotenv": "^17.0.1",
+    "eslint": "^9.39.2"
   },
   "peerDependencies": {
     "rollup": ">=3.24.0"
