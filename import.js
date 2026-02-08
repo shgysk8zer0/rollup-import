@@ -8,6 +8,7 @@ import { isString, isBare } from '@shgysk8zer0/npm-utils/utils';
 import { pathToURL } from '@shgysk8zer0/npm-utils/url';
 import { dirname } from '@shgysk8zer0/npm-utils/path';
 
+const ALPHABET = 'base64';
 const ESCAPE_PATTERN = /[\\'\n\r]/g;
 const ESCAPES = {
 	'\'': '\\\'',
@@ -53,9 +54,9 @@ function createExport(src, type) {
 
 			case 'bytes':
 				if (typeof src === 'string') {
-					return `export default new Uint8Array([${new TextEncoder().encode(src).join(',')}])`;
+					return `export default Uint8Array.fromBase64('${new TextEncoder().encode(src).toBase64({ alphabet: ALPHABET })}',{alphabet:'${ALPHABET}'})`;
 				} else if (src instanceof Uint8Array) {
-					return `export default new Uint8Array([${src.join(',')}]);`;
+					return `export default Uint8Array.fromBase64('${src.toBase64({ alphabet: ALPHABET })}',{alphabet:'${ALPHABET}'});`;
 				} else {
 					throw new TypeError('For byte exports, src must be a string or UInt8Array.');
 				}

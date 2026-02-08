@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.3] - 2026-02-07
+
+### Changed
+- Base64 encode/decode when using `with { type: 'bytes' }`
+
 ## [v2.0.2] - 2026-01-23
 
 ### Fixed
