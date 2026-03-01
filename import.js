@@ -1,4 +1,3 @@
-/* eslint-env node */
 import { fileExists, readFile } from '@shgysk8zer0/npm-utils/fs';
 import { readYAMLFile, isYAMLFile } from '@shgysk8zer0/npm-utils/yaml';
 import { readJSONFile, isJSONFile } from '@shgysk8zer0/npm-utils/json';

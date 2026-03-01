@@ -1,4 +1,3 @@
-/* eslint-env node */
 /* global process */
 import MagicString from 'magic-string';
 import { validateURL } from '@shgysk8zer0/npm-utils/url';
