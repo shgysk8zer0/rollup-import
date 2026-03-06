@@ -100,7 +100,7 @@ export function rollupImport(importMaps = []) {
 		} catch(err) {
 			if (attempts > 0) {
 				console.warn(err);
-				return await fetchFile(path, { attempts: --attempts, referrerPolicy, cache, signal });
+				return await fetchFile(path, { attempts: attempts - 1, referrerPolicy, cache, signal });
 			} else {
 				throw err;
 			}

@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0.3] - 2026-03-06
+
 ### Changed
 - Base64 encode/decode when using `with { type: 'bytes' }`
+
+### Fixed
+- Fixed failure to decrement in retry count
 
 ## [v2.0.2] - 2026-01-23
 
