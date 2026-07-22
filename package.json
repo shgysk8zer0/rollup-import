@@ -65,7 +65,7 @@
   "dependencies": {
     "@shgysk8zer0/consts": "^1.0.8",
     "@shgysk8zer0/npm-utils": "^1.2.0",
-    "magic-string": "^0.30.21"
+    "magic-string": "^1.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.3",
